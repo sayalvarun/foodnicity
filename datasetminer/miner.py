@@ -32,9 +32,24 @@ for url,name in map(None,URLS,NAMES):
 	time.sleep(.1);
 	html = urllib2.urlopen(url).read()
 	soup = BeautifulSoup(html)
-	collectionlist = soup.find_all("div",id="divGridItemWrapper")
 
-	for anchor in collectionlist:
-		all_links = anchor.find_all("a",class_="img-link")
-		for link in all_links:
-			parseLinkInfo(link.get("href"), BaseURL, name)
+	pageNum = 2 #Start looking for the next page at page 2, since page 1 is the default linked page
+	nextLink = "" #Initialze the next link
+
+	while nextLink != None:
+
+		collectionlist = soup.find_all("div",id="divGridItemWrapper")
+
+		for anchor in collectionlist:
+			all_links = anchor.find_all("a",class_="img-link")
+			for link in all_links:
+				parseLinkInfo(link.get("href"), BaseURL, name)
+		
+		nextPageUrl = url+"?Page="+str(pageNum)+"#recipes"
+		nextLink = soup.find_all("a",href=nextPageUrl)
+
+		html = urllib2.urlopen(nextPageUrl).read()
+		soup = BeautifulSoup(html)
+		print nextPageUrl
+		pageNum = pageNum + 1
+
