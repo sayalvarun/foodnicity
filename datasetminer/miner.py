@@ -9,24 +9,33 @@ URLS = {"http://allrecipes.com/Recipes/World-Cuisine/European/Main.aspx","http:/
 NAMES = {"European","Asian","Latin-American","Canadian","Australian-and-New-Zealander","Middle-Eastern","African"}
 BaseURL = "http://allrecipes.com/"
 
+outfile = open('masterout.txt','w')
+
 def parseLinkInfo(appendLink,url,name):
 	parseUrl = url+appendLink
 	
-	print name+":"
+	write(name+":")
 	parseHtml = urllib2.urlopen(parseUrl).read()
 	pSoup = BeautifulSoup(parseHtml)
-	print pSoup.find(id="itemTitle").get_text()
-	print ""
+	rTitle = pSoup.find(id="itemTitle").get_text()
+	print rTitle
+	write(rTitle)
+	write("")
 
 	ingredients = pSoup.find_all("li",{"id":"liIngredient"})
 	for ing in ingredients:
 		amount = ing.find(id="lblIngAmount")
 		name = ing.find(id="lblIngName")
 		if(amount is not None and name is not None):
-			print amount.get_text()
-			print name.get_text()
-	for i in range(3):
-		print ""
+			write(amount.get_text())
+			write(name.get_text())
+	for i in range(2):
+		write("")
+
+def write(string):
+	outfile.write(string.encode('utf8'))
+	outfile.write("\n")
+
 
 for url,name in map(None,URLS,NAMES):
 	time.sleep(.1);
@@ -34,9 +43,9 @@ for url,name in map(None,URLS,NAMES):
 	soup = BeautifulSoup(html)
 
 	pageNum = 2 #Start looking for the next page at page 2, since page 1 is the default linked page
-	nextLink = "" #Initialze the next link
+	nextLink = ["thing"] #Initialze the next link
 
-	while nextLink != None:
+	while nextLink:
 
 		collectionlist = soup.find_all("div",id="divGridItemWrapper")
 
@@ -50,6 +59,8 @@ for url,name in map(None,URLS,NAMES):
 
 		html = urllib2.urlopen(nextPageUrl).read()
 		soup = BeautifulSoup(html)
+		print nextLink
 		print nextPageUrl
 		pageNum = pageNum + 1
 
+outfile.close()
