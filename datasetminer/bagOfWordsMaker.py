@@ -1,5 +1,5 @@
 import collections,re
-
+'''
 f = open("masteroutMASTER.txt","r")
 
 east = ""
@@ -54,3 +54,46 @@ for line in f:
 
 #bagOfWords = collections.Counter(re.findall(r'\w+', txt))
 #print bagOfWords
+'''
+
+#open dataset file
+data = open("dataset.txt", "r")
+output = open("features.txt", "w")
+ingredients_map = {}
+
+NEUTRAL = -1
+EAST = 0
+WEST = 1
+
+for line in data:
+	line = line.split(',')
+	for i in range(1, len(line)):
+		#remove trailing whitespace
+		line[i] = line[i].rstrip()
+
+		#if the ingredient doesnt exist in the map yet, insert the entry
+		if line[i] not in ingredients_map:
+			ingredients_map[line[i]] = [0,0]
+
+		#increment the count for the proper cuisine
+		ingredients_map[line[i]][int(line[0])]+=1
+
+#close file
+data.close()
+
+#go through all the ingredients
+for key in ingredients_map:
+	east = ingredients_map[key][EAST]
+	half_east = east/2
+	west = ingredients_map[key][WEST]
+	half_west = west/2
+
+	cuisine = NEUTRAL
+	if half_east >= west:
+		cuisine = EAST
+	if half_west >= east:
+		cuisine = WEST
+
+	print key,ingredients_map[key],cuisine
+	if cuisine != NEUTRAL:
+		output.write(key+","+str(cuisine)+"\n")
