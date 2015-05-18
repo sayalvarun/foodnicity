@@ -1,6 +1,6 @@
 import collections,re
 
-f = open("masteroutMaster.txt","r")
+f = open("masteroutMASTER.txt","r")
 
 east = ""
 west = ""
@@ -10,21 +10,20 @@ isEast = True
 spaceSeen = False
 
 def isEastCountry(line):
-	if line == 'Australian-and-New-Zealander:\n':
+	if 'Australian-and-New-Zealander' in line:
 		return True
-	elif line == 'Latin-American:\n':
+	elif'Latin-American:' in line:
 		return False
-	elif line == 'Asian:\n':
+	elif 'Asian:' in line:
 		return True
-	elif line == 'African:\n':
+	elif 'African:' in line:
 		return False
-	elif line == 'European:\n':
+	elif 'European' in line:
 		return True
-	elif line == 'Middle-Eastern:\n':
+	elif'Middle-Eastern' in line:
 		return True
-	elif line == 'Canadian:\n':
+	elif 'Canadian' in line:
 		return False
-
 
 for line in f:
 	if(countryLine):
@@ -53,5 +52,5 @@ for line in f:
 		spaceSeen = False
 
 
-bagOfWords = collections.Counter(re.findall(r'\w+', txt)
-
+#bagOfWords = collections.Counter(re.findall(r'\w+', txt))
+#print bagOfWords
