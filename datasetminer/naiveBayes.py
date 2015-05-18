@@ -10,37 +10,51 @@ text_clf = Pipeline([('vect', CountVectorizer()),
                       ('clf', MultinomialNB()),
 ])
 
+arr = []
+arr2 = []
+
+data = np.array(arr)
+
+labels = np.array(arr2)
+
+
 categories = ['east', 'west']
 
-twenty_train = fetch_20newsgroups(subset='train',
-	categories=categories, shuffle=True, random_state=42)
+eastFile = open("East.txt")
+
+eastContents = eastFile.read()
+
+splitEastContents = eastContents.split("\n")
+
+for line in splitEastContents:
+	splitLine = line.split(",",1)
+	np.append(data, splitLine[1])
+	np.append(labels, int(splitLine[0]))
+
+eastFile.close()
+
+print data
+print labels
+
+count_vect = CountVectorizer()
+X_train_counts = count_vect.fit_transform(data)
+
+tfidf_transformer = TfidfTransformer()
+X_train_tfidf = tfidf_transformer.fit_transform(X_train_counts)
+
+clf = MultinomialNB().fit(X_train_tfidf, labels)
 
 
-clf = text_clf.fit(twenty_train.data, twenty_train.target) #Vecotorizer + transformer + classifier
 
-docs_new = ['God is love', 'OpenGL on the GPU is fast']
+#clf = text_clf.fit(data, labels) #Vectorizer + transformer + classifier
+
+'''docs_new = ['Candied Apple', 'Cucumber']
 
 predicted = clf.predict(docs_new)
 
-twenty_test = fetch_20newsgroups(subset='test',
-     categories=categories, shuffle=True, random_state=42)
-docs_test = twenty_test.data
-predicted = text_clf.predict(docs_test)
+print predicted'''
 
-#print twenty_train.target_names
-#print X_train_counts.shape
-#print count_vect.vocabulary_.get(u'algorithm')
-#print X_train_tfidf.shape
-#print X_new_counts
-print predicted
-print np.mean(predicted == twenty_test.target)
-
-for doc, category in zip(docs_new, predicted):
-	print('%r => %s' % (doc, twenty_train.target_names[category]))
-
-#print twenty_train.data
-#print twenty_test.data
-for t in twenty_test.target[:10]:
-	print(twenty_test.target_names[t])
+'''for doc, category in zip(docs_new, predicted):
+	print('%r => %s' % (doc, twenty_train.target_names[category]))'''
 
 

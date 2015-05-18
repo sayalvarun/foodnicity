@@ -26,6 +26,9 @@ twenty_train = fetch_20newsgroups(subset='train',
 
 clf = text_clf.fit(twenty_train.data, twenty_train.target) #Vecotorizer + transformer + classifier
 
+print twenty_train.data[0]
+print(twenty_train.target_names[twenty_train.target[0]])
+
 docs_new = ['God is love', 'OpenGL on the GPU is fast',]
 #X_new_counts = count_vect.transform(docs_new)
 #X_new_tfidf = tfidf_transformer.transform(X_new_counts)
