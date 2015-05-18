@@ -10,12 +10,9 @@ text_clf = Pipeline([('vect', CountVectorizer()),
                       ('clf', MultinomialNB()),
 ])
 
-arr = []
-arr2 = []
+data = []
 
-data = np.array(arr)
-
-labels = np.array(arr2)
+labels = []
 
 
 categories = ['east', 'west']
@@ -28,21 +25,23 @@ splitEastContents = eastContents.split("\n")
 
 for line in splitEastContents:
 	splitLine = line.split(",",1)
-	np.append(data, splitLine[1])
-	np.append(labels, int(splitLine[0]))
+	data.append(splitLine[1])
+	labels.append(int(splitLine[0]))
 
 eastFile.close()
 
-print data
-print labels
+npData = np.array(data)
+npLabels = np.array(labels)
 
 count_vect = CountVectorizer()
-X_train_counts = count_vect.fit_transform(data)
+X_train_counts = count_vect.fit_transform(npData)
 
 tfidf_transformer = TfidfTransformer()
 X_train_tfidf = tfidf_transformer.fit_transform(X_train_counts)
 
-clf = MultinomialNB().fit(X_train_tfidf, labels)
+print npLabels
+
+clf = MultinomialNB().fit(X_train_tfidf, npLabels)
 
 
 

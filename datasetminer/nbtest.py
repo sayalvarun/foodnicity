@@ -4,6 +4,7 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
 import numpy as np
+import types
 
 text_clf = Pipeline([('vect', CountVectorizer()),
                       ('tfidf', TfidfTransformer()), #Replaces commented code below
@@ -26,8 +27,7 @@ twenty_train = fetch_20newsgroups(subset='train',
 
 clf = text_clf.fit(twenty_train.data, twenty_train.target) #Vecotorizer + transformer + classifier
 
-print twenty_train.data[0]
-print(twenty_train.target_names[twenty_train.target[0]])
+print type(twenty_train)
 
 docs_new = ['God is love', 'OpenGL on the GPU is fast',]
 #X_new_counts = count_vect.transform(docs_new)
