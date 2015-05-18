@@ -1,4 +1,5 @@
 from sklearn.datasets import fetch_20newsgroups
+from sklearn.datasets import load_files
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.naive_bayes import MultinomialNB
@@ -15,9 +16,22 @@ data = []
 labels = []
 
 
-categories = ['east', 'west']
+cats = ['East', 'West']
 
-eastFile = open("East.txt")
+dset = load_files("Data",categories=cats, load_content=True, shuffle=True, encoding=None, decode_error='strict', random_state=0)
+
+clf = text_clf.fit(dset.data, dset.target) #Vecotorizer + transformer + classifier
+
+docs_new = ['ground beef,chopped onion,chopped celery,chopped carrots,garlic,peeled and diced tomatoes,tomato sauce,kidney beans,water,beef bouillon granules,dried parsley,dried oregano,dried basil,chopped cabbage,whole kernel corn,green beans,macaroni', 
+			'canola oil,onion,garlic,beef stew meat,water,tomatoes,fresh green beans,bok choy,fresh broccoli,tamarind soup base']
+
+predicted = clf.predict(docs_new)
+
+print predicted
+
+
+
+'''eastFile = open("East.txt")
 
 eastContents = eastFile.read()
 
@@ -41,7 +55,7 @@ X_train_tfidf = tfidf_transformer.fit_transform(X_train_counts)
 
 print npLabels
 
-clf = MultinomialNB().fit(X_train_tfidf, npLabels)
+clf = MultinomialNB().fit(X_train_tfidf, npLabels)'''
 
 
 
