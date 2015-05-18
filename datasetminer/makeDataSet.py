@@ -8,28 +8,28 @@ import random
 def contains_digit(string):
 	return any(char.isdigit() for char in string)
 
-def isEastCountry(line):
+def getCuisine(line):
 	if 'Australian-and-New-Zealander' in line:
-		return True
+		return EAST
 	elif'Latin-American:' in line:
-		return False
+		return WEST
 	elif 'Asian:' in line:
-		return True
+		return EAST
 	elif 'African:' in line:
-		return False
+		return WEST
 	elif 'European' in line:
-		return True
+		return WEST
 	elif'Middle-Eastern' in line:
-		return True
+		return EAST
 	elif 'Canadian' in line:
-		return False
+		return WEST
 
 
 #open files
 input_file = open("masteroutMASTER.txt","r")
-output_file = open("dataset.txt", "w")
-east_file = open("East.txt", "w")
-west_file = open("West.txt", "w")
+output_file = open("Holdout.txt", "w")
+east_file = open("Data/East/East.txt", "w")
+west_file = open("Data/West/West.txt", "w")
 
 ingredients=[]
 skip_line = False
@@ -56,15 +56,13 @@ for line in input_file:
 		#only print if there are ingredients...
 		if len(ingredients) != 0:
 			ingredients_str = ",".join(ingredients)+"\n"
-
-			print ingredients[0],EAST,WEST
+			print ingredients
 			#if eastern recipe
 			if int(ingredients[0]) == EAST:
-				print "east"
 				#increment eastern recipe count
 				east_count += 1
 				#if right time, put in East file
-				if east_count%n == 0:
+				if east_count%n != 0:
 					east_file.write(ingredients_str)
 				#otherwise, just pool it in w/ the rest
 				else:
@@ -72,11 +70,10 @@ for line in input_file:
 
 			#if western recipe
 			if int(ingredients[0]) == WEST:
-				print "west"
 				#increment western recipe count
 				west_count += 1
 				#if right time, put in West file
-				if west_count%n == 0:
+				if west_count%n != 0:
 					west_file.write(ingredients_str)
 				#otherwise, just pool it in w/ the rest
 				else:
@@ -86,10 +83,7 @@ for line in input_file:
 		del ingredients[:]
 
 		#give the region
-		if isEastCountry(line):
-			line = str(EAST)
-		else:
-			line = str(WEST)
+		line = str(getCuisine(line))
 		
 		ingredients.append(line)
 		#skip the line; next line is recipe name
@@ -104,8 +98,6 @@ for line in input_file:
 		ingredients.append(line);
 
 output_file.write(",".join(ingredients))
-
-print str(east_count)+"vs"+str(west_count)
 
 #close files
 input_file.close()
