@@ -29,7 +29,7 @@ clf = text_clf.fit(twenty_train.data, twenty_train.target) #Vecotorizer + transf
 
 print type(twenty_train)
 
-docs_new = ['God is love', 'OpenGL on the GPU is fast',]
+docs_new = ['God is love', 'OpenGL on the GPU is fast']
 #X_new_counts = count_vect.transform(docs_new)
 #X_new_tfidf = tfidf_transformer.transform(X_new_counts)
 

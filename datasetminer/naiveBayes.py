@@ -22,8 +22,7 @@ dset = load_files("Data",categories=cats, load_content=True, shuffle=True, encod
 
 clf = text_clf.fit(dset.data, dset.target) #Vecotorizer + transformer + classifier
 
-docs_new = ['ground beef,chopped onion,chopped celery,chopped carrots,garlic,peeled and diced tomatoes,tomato sauce,kidney beans,water,beef bouillon granules,dried parsley,dried oregano,dried basil,chopped cabbage,whole kernel corn,green beans,macaroni', 
-			'canola oil,onion,garlic,beef stew meat,water,tomatoes,fresh green beans,bok choy,fresh broccoli,tamarind soup base']
+docs_new = ['soy sauce']
 
 predicted = clf.predict(docs_new)
 
