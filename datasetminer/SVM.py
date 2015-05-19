@@ -37,7 +37,7 @@ docs_new = []
 
 labels = []
 
-testFile = open("Holdout.txt","r")
+testFile = open("Holdout3.txt","r")
 
 testDocs = testFile.read().split("\n")
 
