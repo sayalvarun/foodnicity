@@ -5,6 +5,7 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
 import numpy as np
+from sklearn.linear_model import SGDClassifier
 
 def getClass(val):
 	if val == 0:
@@ -16,7 +17,8 @@ def getClass(val):
 
 text_clf = Pipeline([('vect', CountVectorizer()),
                       ('tfidf', TfidfTransformer()), #Replaces commented code below
-                      ('clf', MultinomialNB()),
+                      ('clf', SGDClassifier(loss='hinge', penalty='l2',
+                                            alpha=1e-3, n_iter=5, random_state=42)),
 ])
 
 data = []
