@@ -27,7 +27,7 @@ def getCuisine(line):
 
 #open files
 input_file = open("masteroutMASTER.txt","r")
-output_file = open("Holdout.txt", "w")
+output_file = open("Holdout3.txt", "w")
 east_file = open("Data/East/East.txt", "w")
 west_file = open("Data/West/West.txt", "w")
 
@@ -37,7 +37,7 @@ skip_line = False
 EAST = 0
 WEST = 1
 
-n = random.randint(5, 10)
+n = 2#random.randint(1, 4)
 east_count = 0
 west_count = 0
 
