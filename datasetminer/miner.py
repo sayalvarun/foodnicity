@@ -1,3 +1,10 @@
+#############################################################################################################
+# This file is used to grab recipe data from allrecipes.com. In total there									#
+# Will be about ~8000 recipes scraped. Please note that due to some site 									#
+# scraping issues, the classification will be off by some constant. 										#
+# Please Use the existing dataset for actual testing, but feel free to run miner to experiment				#
+#############################################################################################################
+
 import urllib2
 from bs4 import BeautifulSoup
 import time
@@ -9,8 +16,10 @@ URLS = {"http://allrecipes.com/Recipes/World-Cuisine/European/Main.aspx","http:/
 NAMES = {"European","Asian","Latin-American","Canadian","Australian-and-New-Zealander","Middle-Eastern","African"}
 BaseURL = "http://allrecipes.com/"
 
-outfile = open('masterout.txt','w')
+outfile = open('masterout.txt','w') #output file, can be overwritten
 
+#Method that parses allrecipes.com/someregion/somerecipe
+#Each recipe is written into the output file
 def parseLinkInfo(appendLink,url,name):
 	parseUrl = url+appendLink
 	
@@ -32,15 +41,20 @@ def parseLinkInfo(appendLink,url,name):
 	for i in range(2):
 		write("")
 
+#Method to encapsulate the utf8 encoding used to avoid
+#errors due to weird characters
 def write(string):
 	outfile.write(string.encode('utf8'))
 	outfile.write("\n")
 
 
+#Main code
 for url,name in map(None,URLS,NAMES):
-	time.sleep(.1);
+	time.sleep(.1)
+	#Sleep to not simulate DOS attacks
 	html = urllib2.urlopen(url).read()
 	soup = BeautifulSoup(html)
+	#Read and make 'soup' out of html
 
 	pageNum = 2 #Start looking for the next page at page 2, since page 1 is the default linked page
 	nextLink = ["thing"] #Initialze the next link
@@ -48,19 +62,26 @@ for url,name in map(None,URLS,NAMES):
 	while nextLink:
 
 		collectionlist = soup.find_all("div",id="divGridItemWrapper")
+		#Find all divs with a recipe inside them (name found by reading page source)
 
 		for anchor in collectionlist:
 			all_links = anchor.find_all("a",class_="img-link")
+			#Within each div, find each link
 			for link in all_links:
 				parseLinkInfo(link.get("href"), BaseURL, name)
+				#Parse the page it points to
 		
 		nextPageUrl = url+"?Page="+str(pageNum)+"#recipes"
 		nextLink = soup.find_all("a",href=nextPageUrl)
+		#Grab the next page
 
 		html = urllib2.urlopen(nextPageUrl).read()
 		soup = BeautifulSoup(html)
+		#Make a new soup
+
 		print nextLink
 		print nextPageUrl
 		pageNum = pageNum + 1
+		#Reiterate over next page
 
 outfile.close()

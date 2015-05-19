@@ -1,4 +1,10 @@
 #! /usr/local/bin/python
+
+#############################################################################################################
+# This file is used to split up the masteroutMaster file into 3 disjoint									#
+# sections: east training data, west training data, and holdout test data 								   	#
+#############################################################################################################
+
 import random
 
 '''

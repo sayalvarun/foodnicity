@@ -1,4 +1,10 @@
 #! /usr/local/bin/python
+
+#############################################################################################################
+# This file is used to split up the masteroutMaster file into 8 disjoint									#
+# sections: 7 training data files (for each of our regions) and one holdout set								#
+#############################################################################################################
+
 import random
 
 '''
@@ -27,7 +33,7 @@ def getCuisine(line):
 
 #open files
 input_file = open("masteroutMASTER.txt","r")
-output_file = open("multiHoldout.txt", "w")
+output_file = open("multiHoldout.txt", "w") #Specific holdout set for multiple categories
 afr_file = open("7CatData/African/African.txt", "w")
 asn_file = open("7CatData/Asian/Asian.txt", "w")
 aus_file = open("7CatData/Australian-and-New-Zealander/Australian-and-New-Zealander.txt", "w")
