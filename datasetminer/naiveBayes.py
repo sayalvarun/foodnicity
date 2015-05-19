@@ -22,7 +22,9 @@ dset = load_files("Data",categories=cats, load_content=True, shuffle=True, encod
 
 clf = text_clf.fit(dset.data, dset.target) #Vecotorizer + transformer + classifier
 
-docs_new = ['soy sauce']
+
+docs_new = ['refrigerated pie crust,butter,leeks,salt and black pepper to taste,light cream,shredded Gruyere cheese',
+'vegetable oil,potatoes,onions,garlic,minced fresh ginger root,chili powder,ground black pepper,ground turmeric,ground cumin,salt,medium tomatoes,plain yogurt,chopped fresh mint leaves,ground cardamom,cinnamon stick,boneless,vegetable oil,onion,powdered saffron,cardamom,whole cloves,cinnamon stick,ground ginger,basmati rice,chicken stock,salt']
 
 predicted = clf.predict(docs_new)
 
