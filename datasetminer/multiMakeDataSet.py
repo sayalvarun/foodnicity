@@ -10,35 +10,45 @@ def contains_digit(string):
 
 def getCuisine(line):
 	if 'African' in line:
-		return WEST
+		return AFRICAN
 	elif 'Asian' in line:
-		return EAST
+		return ASIAN
 	elif 'Australian-and-New-Zealander' in line:
-		return EAST
+		return AUSSIE
 	elif 'Canadian' in line:
-		return WEST
+		return CANADIAN
 	elif 'European' in line:
-		return EAST
+		return EUROPEAN
 	elif'Latin-American' in line:
-		return WEST
+		return LATINO
 	elif'Middle-Eastern' in line:
-		return EAST
+		return BROWN
 
 
 #open files
 input_file = open("masteroutMASTER.txt","r")
-output_file = open("Holdout.txt", "w")
-e_file = open("2CatData/East/East.txt", "w")
-w_file = open("2CatData/West/West.txt", "w")
+output_file = open("multiHoldout.txt", "w")
+afr_file = open("7CatData/African/African.txt", "w")
+asn_file = open("7CatData/Asian/Asian.txt", "w")
+aus_file = open("7CatData/Australian-and-New-Zealander/Australian-and-New-Zealander.txt", "w")
+can_file = open("7CatData/Canadian/Canadian.txt", "w")
+eur_file = open("7CatData/European/European.txt", "w")
+lat_file = open("7CatData/Latin-American/Latin-American.txt", "w")
+bwn_file = open("7CatData/Middle-Eastern/Middle-Eastern.txt", "w")
 
 ingredients=[]
 skip_line = False
 
-EAST = 0
-WEST = 1
+AFRICAN = 0
+ASIAN = 1
+AUSSIE = 2
+CANADIAN = 3
+EUROPEAN = 4
+LATINO = 5
+BROWN = 6
 
 n = 3#random.randint(1, 4)
-counts = [0] * (WEST+1)
+counts = [0] * (BROWN+1)
 
 #read input file
 for line in input_file:
@@ -63,12 +73,32 @@ for line in input_file:
 			else:
 				ingredients_str = ingredients_str.split(",", 1)[1]
 				#if african recipe, write to african file
-				if int(ingredients[0]) == EAST:
-					e_file.write(ingredients_str)
+				if int(ingredients[0]) == AFRICAN:
+					afr_file.write(ingredients_str)
 
 				#if asian recipe, write to asian file
-				if int(ingredients[0]) == WEST:
-					w_file.write(ingredients_str)
+				if int(ingredients[0]) == ASIAN:
+					asn_file.write(ingredients_str)
+
+				#if aussie recipe, write to aussie file
+				if int(ingredients[0]) == AUSSIE:
+					aus_file.write(ingredients_str)
+
+				#if canadian recipe, write to canadian file
+				if int(ingredients[0]) == CANADIAN:
+					can_file.write(ingredients_str)
+
+				#if european recipe, write to european file
+				if int(ingredients[0]) == EUROPEAN:
+					eur_file.write(ingredients_str)
+
+				#if latino recipe, write to latino file
+				if int(ingredients[0]) == LATINO:
+					lat_file.write(ingredients_str)
+
+				#if brown recipe, write to brown file
+				if int(ingredients[0]) == BROWN:
+					bwn_file.write(ingredients_str)
 
 		#clear the list for the prev. recipe
 		del ingredients[:]
@@ -93,5 +123,9 @@ output_file.write(",".join(ingredients))
 #close files
 input_file.close()
 output_file.close()
-e_file.close()
-w_file.close()
+afr_file.close()
+asn_file.close()
+can_file.close()
+eur_file.close()
+lat_file.close()
+bwn_file.close()

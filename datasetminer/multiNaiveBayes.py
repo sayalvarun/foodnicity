@@ -8,9 +8,19 @@ import numpy as np
 
 def getClass(val):
 	if val == 0:
-		return "East"
+		return "Africa"
 	elif val == 1:
-		return "West"
+		return "Asian"
+	elif val == 2:
+		return "Australian-and-New-Zealander"
+	elif val == 3:
+		return "Canadian"
+	elif val == 4:
+		return "European"
+	elif val == 5:
+		return "Latin-American"
+	elif val == 6:
+		return "Middle-Eastern"	
 	else:
 		return "N/A"
 
@@ -23,11 +33,12 @@ data = []
 
 labels = []
 
-cats = ['East', 'West']
+cats = ['African', 'Asian', 'Australian-and-New-Zealander', 'Canadian', 'European', 'Latin-American', 'Middle-Eastern']
 
-dset = load_files("2CatData",categories=cats, load_content=True, shuffle=True, encoding=None, decode_error='strict', random_state=0)
+dset = load_files("7CatData",categories=cats, load_content=True, shuffle=True, encoding=None, decode_error='strict', random_state=0)
 
 #testSet = load_files("Test",categories=cats, load_content=True, shuffle=True, encoding=None, decode_error='strict', random_state=0)
+
 
 clf = text_clf.fit(dset.data, dset.target) #Vectorizer + transformer + classifier
 
@@ -35,7 +46,7 @@ docs_new = []
 
 labels = []
 
-testFile = open("Holdout.txt","r")
+testFile = open("multiHoldout.txt","r")
 
 testDocs = testFile.read().split("\n")
 
